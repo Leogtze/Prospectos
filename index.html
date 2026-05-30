@@ -5,256 +5,283 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ISUZU Prospectos — Leo Gutierrez</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --red: #CC0000;
-    --red-light: #fff0f0;
-    --red-dark: #990000;
-    --yellow: #f59e0b;
-    --yellow-light: #fffbeb;
-    --blue: #2563eb;
-    --blue-light: #eff6ff;
-    --gray: #6b7280;
-    --gray-light: #f9fafb;
-    --border: #e5e7eb;
-    --text: #111827;
-    --text2: #374151;
-    --text3: #6b7280;
-    --white: #ffffff;
-    --green: #059669;
-    --green-light: #ecfdf5;
-    --orange: #d97706;
-    --orange-light: #fffbeb;
-    --purple: #7c3aed;
-    --purple-light: #f5f3ff;
-  }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f3f4f6; color: var(--text); min-height: 100vh; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red: #CC0000; --red-dark: #990000; --red-light: #fff0f0;
+  --green: #059669; --green-light: #ecfdf5;
+  --blue: #2563eb; --blue-light: #eff6ff;
+  --yellow: #d97706; --yellow-light: #fffbeb;
+  --purple: #7c3aed; --purple-light: #f5f3ff;
+  --gray: #6b7280; --gray-light: #f9fafb;
+  --border: #e5e7eb; --text: #111827; --text2: #374151; --text3: #9ca3af;
+  --white: #ffffff;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f3f4f6; color: var(--text); min-height: 100vh; }
 
-  /* UPLOAD SCREEN */
-  #upload-screen {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 100vh; padding: 2rem; text-align: center;
-  }
-  .upload-logo { font-size: 2rem; font-weight: 800; color: var(--red); letter-spacing: -1px; margin-bottom: 0.5rem; }
-  .upload-sub { color: var(--gray); font-size: 0.95rem; margin-bottom: 2.5rem; }
-  .upload-box {
-    border: 2px dashed var(--border); border-radius: 16px; padding: 3rem 2.5rem;
-    background: white; cursor: pointer; transition: all 0.2s; max-width: 420px; width: 100%;
-  }
-  .upload-box:hover { border-color: var(--red); background: var(--red-light); }
-  .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
-  .upload-box h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
-  .upload-box p { font-size: 0.85rem; color: var(--gray); }
-  #file-input { display: none; }
-  .upload-btn {
-    display: inline-block; margin-top: 1.5rem; padding: 0.75rem 2rem;
-    background: var(--red); color: white; border: none; border-radius: 10px;
-    font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background 0.2s;
-  }
-  .upload-btn:hover { background: var(--red-dark); }
+/* ── UPLOAD ── */
+#upload-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 2rem; text-align: center;
+}
+.upload-logo { font-size: 2.2rem; font-weight: 800; color: var(--red); margin-bottom: 0.25rem; }
+.upload-sub { color: var(--gray); font-size: 0.9rem; margin-bottom: 2.5rem; }
+.upload-box {
+  border: 2px dashed var(--border); border-radius: 20px; padding: 3rem 2.5rem;
+  background: white; cursor: pointer; max-width: 400px; width: 100%;
+  transition: all 0.2s;
+}
+.upload-box:hover { border-color: var(--red); background: var(--red-light); }
+.upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+.upload-box h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+.upload-box p { font-size: 0.82rem; color: var(--gray); }
+.upload-btn {
+  display: inline-block; margin-top: 1.5rem; padding: 0.7rem 2rem;
+  background: var(--red); color: white; border: none; border-radius: 10px;
+  font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+.upload-btn:hover { background: var(--red-dark); }
+#file-input { display: none; }
 
-  /* MAIN APP */
-  #app { display: none; }
+/* ── APP ── */
+#app { display: none; min-height: 100vh; }
 
-  /* TOPBAR */
-  .topbar {
-    background: var(--red); color: white; padding: 0.75rem 1.25rem;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-  .topbar-left { display: flex; align-items: center; gap: 0.75rem; }
-  .topbar-logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.5px; }
-  .topbar-count { font-size: 0.8rem; opacity: 0.85; background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 20px; }
-  .topbar-right { display: flex; gap: 0.5rem; }
-  .btn-top {
-    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-    color: white; padding: 0.4rem 0.9rem; border-radius: 8px; cursor: pointer;
-    font-size: 0.8rem; font-weight: 500; transition: all 0.2s; white-space: nowrap;
-  }
-  .btn-top:hover { background: rgba(255,255,255,0.25); }
-  .btn-top.export { background: white; color: var(--red); font-weight: 600; }
-  .btn-top.export:hover { background: #f8f8f8; }
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--red); color: white; padding: 0.7rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-logo { font-weight: 800; font-size: 1.1rem; }
+.topbar-center { font-size: 0.82rem; opacity: 0.9; text-align: center; }
+.topbar-right { display: flex; gap: 0.4rem; }
+.btn-sm {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: white; padding: 0.35rem 0.75rem; border-radius: 8px; cursor: pointer;
+  font-size: 0.75rem; font-weight: 500; transition: all 0.15s; white-space: nowrap;
+}
+.btn-sm:hover { background: rgba(255,255,255,0.28); }
+.btn-sm.export { background: white; color: var(--red); font-weight: 700; }
 
-  /* PROGRESS BAR */
-  .progress-bar-wrap { background: var(--red-dark); height: 4px; }
-  .progress-bar-fill { background: white; height: 4px; transition: width 0.3s; }
+/* ── PROGRESS ── */
+.progress-wrap { height: 5px; background: var(--red-dark); }
+.progress-fill { height: 5px; background: white; transition: width 0.4s ease; }
 
-  /* CARD AREA */
-  .card-area { max-width: 680px; margin: 0 auto; padding: 1.25rem 1rem 6rem; }
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex; gap: 0.4rem; padding: 0.6rem 1rem; background: white;
+  border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.fbtn {
+  padding: 0.3rem 0.8rem; border-radius: 20px; border: 1.5px solid var(--border);
+  background: white; font-size: 0.75rem; font-weight: 500; cursor: pointer;
+  white-space: nowrap; color: var(--text2); transition: all 0.15s;
+}
+.fbtn:hover { border-color: var(--red); }
+.fbtn.active { background: var(--red); color: white; border-color: var(--red); }
 
-  /* PROSPECT CARD */
-  .card {
-    background: white; border-radius: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    overflow: hidden; margin-bottom: 1rem;
-  }
-  .card-header {
-    padding: 1rem 1.25rem 0.75rem;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
-  }
-  .card-header-left { flex: 1; min-width: 0; }
-  .card-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
-  .badge {
-    font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 20px;
-    text-transform: uppercase; letter-spacing: 0.03em;
-  }
-  .badge-urgente { background: #fee2e2; color: #991b1b; }
-  .badge-emergente { background: #fef3c7; color: #92400e; }
-  .badge-amplia { background: #e0e7ff; color: #3730a3; }
-  .badge-score { background: var(--gray-light); color: var(--text2); }
-  .card-empresa { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; line-height: 1.3; }
-  .card-contacto { font-size: 0.9rem; color: var(--text2); }
-  .card-cargo { font-size: 0.8rem; color: var(--gray); }
+/* ── MAIN STAGE ── */
+.stage {
+  max-width: 560px; margin: 0 auto; padding: 1.25rem 1rem 2rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
 
-  /* STATUS indicator */
-  .status-dot {
-    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
-  }
-  .status-dot.pendiente { background: #d1d5db; }
-  .status-dot.contactado { background: #10b981; }
-  .status-dot.no-contesto { background: #f59e0b; }
-  .status-dot.cita { background: #2563eb; }
-  .status-dot.no-interesa { background: #ef4444; }
+/* ── CARD ── */
+.card {
+  background: white; border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  animation: slideIn 0.25s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  /* CARD BODY */
-  .card-body { padding: 0.75rem 1.25rem; }
-  .info-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
-  .info-item { font-size: 0.8rem; color: var(--gray); display: flex; align-items: center; gap: 0.3rem; }
-  .info-item a { color: var(--blue); text-decoration: none; }
-  .info-item a:hover { text-decoration: underline; }
+.card-header {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.card-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.badge {
+  font-size: 0.68rem; font-weight: 700; padding: 2px 9px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.b-urgente   { background: #fee2e2; color: #991b1b; }
+.b-emergente { background: #fef3c7; color: #92400e; }
+.b-amplia    { background: #e0e7ff; color: #3730a3; }
+.b-score     { background: var(--gray-light); color: var(--text2); }
+.b-nivel     { background: #f0fdf4; color: #065f46; }
 
-  .section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 0.3rem; margin-top: 0.7rem; }
-  .senales-text { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
-  .insights-text { font-size: 0.82rem; color: var(--text2); line-height: 1.6; background: #f0fdf4; padding: 0.5rem 0.75rem; border-radius: 8px; border-left: 3px solid var(--green); }
-  .estrategia-text { font-size: 0.82rem; color: var(--text2); line-height: 1.6; background: var(--blue-light); padding: 0.5rem 0.75rem; border-radius: 8px; border-left: 3px solid var(--blue); }
+.card-empresa  { font-size: 1.15rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.2rem; }
+.card-contacto { font-size: 0.92rem; font-weight: 600; color: var(--text2); }
+.card-cargo    { font-size: 0.78rem; color: var(--gray); margin-top: 0.1rem; }
 
-  /* ACTION AREA */
-  .card-actions { padding: 0.75rem 1.25rem; border-top: 1px solid var(--border); background: var(--gray-light); }
+.card-meta { display: flex; gap: 1rem; flex-wrap: wrap; padding: 0.6rem 1.25rem; border-bottom: 1px solid var(--border); }
+.meta-item { font-size: 0.78rem; color: var(--gray); display: flex; align-items: center; gap: 0.25rem; }
 
-  /* Previous result badge */
-  .prev-result {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    font-size: 0.78rem; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-bottom: 0.6rem;
-  }
-  .prev-result.contactado { background: #d1fae5; color: #065f46; }
-  .prev-result.no-contesto { background: #fef3c7; color: #92400e; }
-  .prev-result.cita { background: #dbeafe; color: #1e40af; }
-  .prev-result.no-interesa { background: #fee2e2; color: #991b1b; }
+/* ── CONTACT BUTTONS ── */
+.contact-section { padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border); }
+.contact-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 0.5rem; }
+.contact-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.cbtn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.55rem 1rem; border-radius: 10px; border: none;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; transition: all 0.15s; white-space: nowrap;
+}
+.cbtn:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.15); }
+.cbtn.whatsapp    { background: #25d366; color: white; }
+.cbtn.llamar      { background: #4b5563; color: white; }
+.cbtn.tel-empresa { background: var(--purple-light); color: var(--purple); }
+.cbtn.email       { background: #ea4335; color: white; }
+.cbtn.linkedin    { background: #0077b5; color: white; }
+.cbtn.web         { background: var(--gray-light); color: var(--text2); border: 1px solid var(--border); }
+.no-contact { font-size: 0.78rem; color: var(--text3); font-style: italic; }
 
-  .prev-nota { font-size: 0.8rem; color: var(--text2); background: white; padding: 0.4rem 0.7rem; border-radius: 8px; margin-bottom: 0.6rem; border: 1px solid var(--border); }
-  .prev-fecha { font-size: 0.75rem; color: var(--gray); margin-bottom: 0.75rem; }
+/* ── INSIGHTS ── */
+.insights-section { padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border); }
+.sec-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 0.35rem; margin-top: 0.65rem; }
+.sec-label:first-child { margin-top: 0; }
+.senales-text  { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
+.insights-box  { font-size: 0.8rem; color: var(--text2); line-height: 1.65; background: var(--green-light); padding: 0.5rem 0.75rem; border-radius: 8px; border-left: 3px solid var(--green); }
+.estrategia-box{ font-size: 0.8rem; color: var(--text2); line-height: 1.65; background: var(--blue-light); padding: 0.5rem 0.75rem; border-radius: 8px; border-left: 3px solid var(--blue); }
 
-  .action-label { font-size: 0.75rem; font-weight: 600; color: var(--gray); margin-bottom: 0.5rem; }
-  .result-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
-  .result-btn {
-    padding: 0.4rem 0.85rem; border-radius: 8px; border: 1.5px solid var(--border);
-    background: white; font-size: 0.78rem; font-weight: 500; cursor: pointer;
-    transition: all 0.15s; color: var(--text2);
-  }
-  .result-btn:hover { border-color: var(--red); color: var(--red); }
-  .result-btn.active-contactado { background: #d1fae5; border-color: #10b981; color: #065f46; }
-  .result-btn.active-no-contesto { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
-  .result-btn.active-cita { background: #dbeafe; border-color: var(--blue); color: #1e40af; }
-  .result-btn.active-no-interesa { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+/* ── ACTION SECTION ── */
+.action-section { padding: 0.85rem 1.25rem; background: var(--gray-light); }
 
-  .nota-input {
-    width: 100%; padding: 0.5rem 0.75rem; border: 1.5px solid var(--border);
-    border-radius: 8px; font-size: 0.82rem; font-family: inherit; resize: none;
-    margin-bottom: 0.6rem; transition: border-color 0.2s;
-  }
-  .nota-input:focus { outline: none; border-color: var(--red); }
+.prev-result-wrap { margin-bottom: 0.65rem; }
+.prev-badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.78rem; font-weight: 600; padding: 3px 11px; border-radius: 20px;
+}
+.pr-contactado  { background: #d1fae5; color: #065f46; }
+.pr-no-contesto { background: #fef3c7; color: #92400e; }
+.pr-cita        { background: #dbeafe; color: #1e40af; }
+.pr-no-interesa { background: #fee2e2; color: #991b1b; }
+.prev-nota { font-size: 0.78rem; color: var(--text2); margin-top: 0.3rem; background: white; padding: 0.35rem 0.65rem; border-radius: 8px; border: 1px solid var(--border); }
+.prev-fecha { font-size: 0.72rem; color: var(--gray); margin-top: 0.25rem; }
 
-  .fecha-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
-  .fecha-label { font-size: 0.78rem; color: var(--gray); white-space: nowrap; }
-  .fecha-input {
-    padding: 0.35rem 0.6rem; border: 1.5px solid var(--border); border-radius: 8px;
-    font-size: 0.78rem; font-family: inherit; transition: border-color 0.2s;
-  }
-  .fecha-input:focus { outline: none; border-color: var(--red); }
+.action-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 0.45rem; }
+.result-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.65rem; }
+.rbtn {
+  padding: 0.45rem 0.9rem; border-radius: 9px; border: 1.5px solid var(--border);
+  background: white; font-size: 0.78rem; font-weight: 500; cursor: pointer;
+  transition: all 0.15s; color: var(--text2);
+}
+.rbtn:hover { border-color: var(--red); color: var(--red); }
+.rbtn.sel-contactado  { background: #d1fae5; border-color: #10b981; color: #065f46; }
+.rbtn.sel-no-contesto { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.rbtn.sel-cita        { background: #dbeafe; border-color: var(--blue); color: #1e40af; }
+.rbtn.sel-no-interesa { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
 
-  .save-btn {
-    width: 100%; padding: 0.65rem; background: var(--red); color: white;
-    border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
-    cursor: pointer; transition: background 0.2s;
-  }
-  .save-btn:hover { background: var(--red-dark); }
-  .save-btn.saved { background: var(--green); }
+.nota-input {
+  width: 100%; padding: 0.5rem 0.75rem; border: 1.5px solid var(--border);
+  border-radius: 9px; font-size: 0.82rem; font-family: inherit; resize: none;
+  margin-bottom: 0.55rem; transition: border-color 0.2s; background: white;
+}
+.nota-input:focus { outline: none; border-color: var(--red); }
 
-  /* EMPTY STATE */
-  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--gray); }
-  .empty-state h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text); }
+.fecha-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+.fecha-lbl { font-size: 0.75rem; color: var(--gray); white-space: nowrap; }
+.fecha-input {
+  padding: 0.32rem 0.6rem; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 0.78rem; font-family: inherit;
+}
+.fecha-input:focus { outline: none; border-color: var(--red); }
 
-  /* FILTERS */
-  .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 0.75rem 1rem; background: white; border-bottom: 1px solid var(--border); overflow-x: auto; }
-  .filter-btn {
-    padding: 0.35rem 0.85rem; border-radius: 20px; border: 1.5px solid var(--border);
-    background: white; font-size: 0.78rem; font-weight: 500; cursor: pointer;
-    transition: all 0.15s; white-space: nowrap; color: var(--text2);
-  }
-  .filter-btn:hover { border-color: var(--red); }
-  .filter-btn.active { background: var(--red); color: white; border-color: var(--red); }
+/* NEXT BUTTON — the main CTA */
+.next-btn {
+  width: 100%; padding: 0.8rem; border: none; border-radius: 12px;
+  font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  background: var(--red); color: white; letter-spacing: 0.01em;
+}
+.next-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+.next-btn:active { transform: translateY(0); }
+.next-btn.done { background: var(--green); }
 
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    background: #111; color: white; padding: 0.6rem 1.2rem; border-radius: 10px;
-    font-size: 0.85rem; font-weight: 500; opacity: 0; transition: opacity 0.3s;
-    pointer-events: none; z-index: 1000; white-space: nowrap;
-  }
-  .toast.show { opacity: 1; }
+/* ── EMPTY / DONE ── */
+.done-screen {
+  text-align: center; padding: 3rem 1.5rem;
+  background: white; border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.done-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.done-screen h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+.done-screen p { font-size: 0.88rem; color: var(--gray); margin-bottom: 1.5rem; }
+.done-btn {
+  padding: 0.65rem 1.5rem; background: var(--red); color: white;
+  border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; margin: 0.3rem;
+}
+.done-btn:hover { background: var(--red-dark); }
+.done-btn.sec { background: white; color: var(--text2); border: 1.5px solid var(--border); }
 
-  @media (max-width: 480px) {
-    .topbar { flex-wrap: wrap; gap: 0.5rem; }
-    .info-row { gap: 0.75rem; }
-    .result-btns { gap: 0.3rem; }
-    .result-btn { font-size: 0.72rem; padding: 0.35rem 0.65rem; }
-  }
+/* ── COUNTER CHIP ── */
+.counter-chip {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.5rem; font-size: 0.8rem; color: var(--gray);
+  background: white; border-radius: 20px; padding: 0.4rem 1rem;
+  border: 1px solid var(--border); align-self: center;
+}
+.chip-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  background: #111; color: white; padding: 0.55rem 1.2rem; border-radius: 10px;
+  font-size: 0.82rem; font-weight: 500; opacity: 0; transition: opacity 0.25s;
+  pointer-events: none; z-index: 999; white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+
+@media (max-width: 480px) {
+  .topbar-center { display: none; }
+  .cbtn { font-size: 0.75rem; padding: 0.45rem 0.8rem; }
+  .rbtn { font-size: 0.73rem; padding: 0.4rem 0.75rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- UPLOAD SCREEN -->
+<!-- UPLOAD -->
 <div id="upload-screen">
   <div class="upload-logo">🚛 ISUZU</div>
   <div class="upload-sub">Gestión de Prospectos — Leo Gutierrez</div>
   <div class="upload-box" onclick="document.getElementById('file-input').click()">
     <div class="upload-icon">📊</div>
     <h3>Cargar lista de prospectos</h3>
-    <p>Sube tu archivo Excel (.xlsx) para comenzar a prospectar</p>
-    <button class="upload-btn" onclick="event.stopPropagation(); document.getElementById('file-input').click()">Seleccionar archivo</button>
+    <p>Sube tu Excel (.xlsx) y arranca a prospectar</p>
+    <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('file-input').click()">Seleccionar archivo</button>
   </div>
   <input type="file" id="file-input" accept=".xlsx,.xls" onchange="handleFile(event)">
-  <p style="margin-top:1.5rem; font-size:0.8rem; color:#9ca3af;">Tu progreso se guarda automáticamente en este navegador</p>
+  <p style="margin-top:1.2rem;font-size:0.75rem;color:#9ca3af;">Tu progreso se guarda automáticamente</p>
 </div>
 
-<!-- MAIN APP -->
+<!-- APP -->
 <div id="app">
   <div class="topbar">
-    <div class="topbar-left">
-      <span class="topbar-logo">🚛 ISUZU</span>
-      <span class="topbar-count" id="count-display">0 / 0</span>
-    </div>
+    <span class="topbar-logo">🚛 ISUZU</span>
+    <span class="topbar-center" id="topbar-info">—</span>
     <div class="topbar-right">
-      <button class="btn-top" onclick="showFilter('pendiente')">📋 Pendientes</button>
-      <button class="btn-top" onclick="showFilter('todos')">Todos</button>
-      <button class="btn-top export" onclick="exportExcel()">⬇ Excel</button>
+      <button class="btn-sm export" onclick="exportExcel()">⬇ Excel</button>
     </div>
   </div>
-  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar"></div></div>
+  <div class="progress-wrap"><div class="progress-fill" id="prog-bar"></div></div>
 
-  <div class="filters" id="filters">
-    <button class="filter-btn active" onclick="setFilter('todos', this)">Todos</button>
-    <button class="filter-btn" onclick="setFilter('urgente', this)">🔴 Urgente</button>
-    <button class="filter-btn" onclick="setFilter('emergente', this)">🟡 Emergente</button>
-    <button class="filter-btn" onclick="setFilter('amplia', this)">📋 Amplia</button>
-    <button class="filter-btn" onclick="setFilter('pendiente', this)">⚪ Pendientes</button>
-    <button class="filter-btn" onclick="setFilter('contactado', this)">✅ Contactados</button>
-    <button class="filter-btn" onclick="setFilter('cita', this)">📅 Con cita</button>
-    <button class="filter-btn" onclick="setFilter('no-contesto', this)">📵 No contestó</button>
-    <button class="filter-btn" onclick="setFilter('no-interesa', this)">❌ No interesa</button>
+  <div class="filter-bar" id="filter-bar">
+    <button class="fbtn active" onclick="setFilter('todos',this)">Todos</button>
+    <button class="fbtn" onclick="setFilter('urgente',this)">🔴 Urgente</button>
+    <button class="fbtn" onclick="setFilter('emergente',this)">🟡 Emergente</button>
+    <button class="fbtn" onclick="setFilter('amplia',this)">📋 Amplia</button>
+    <button class="fbtn" onclick="setFilter('pendiente',this)">⚪ Pendientes</button>
+    <button class="fbtn" onclick="setFilter('contactado',this)">✅ Contactados</button>
+    <button class="fbtn" onclick="setFilter('cita',this)">📅 Con cita</button>
+    <button class="fbtn" onclick="setFilter('no-contesto',this)">📵 No contestó</button>
+    <button class="fbtn" onclick="setFilter('no-interesa',this)">❌ No interesa</button>
   </div>
 
-  <div class="card-area" id="card-area"></div>
+  <div class="stage" id="stage"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -262,302 +289,298 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 let prospects = [];
-let progress = {};
-let currentFilter = 'todos';
+let progress  = {};
+let queue     = [];   // filtered + ordered indices into prospects[]
+let qIdx      = 0;    // current position in queue
+let curFilter = 'todos';
+let curResult = '';   // selected result for current card
 
-// ── LOAD FILE ──────────────────────────────────────────────────────────
+// ── FILE LOAD ─────────────────────────────────────────────────────────
 function handleFile(e) {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(ev) {
+  reader.onload = ev => {
     try {
       const wb = XLSX.read(ev.target.result, { type: 'binary' });
-      const sheets = ['🔴 CALIFICADA URGENTE', '🟡 NEGOCIOS EMERGENTES', '📋 LISTA AMPLIA'];
-      const listaMap = { '🔴 CALIFICADA URGENTE': 'urgente', '🟡 NEGOCIOS EMERGENTES': 'emergente', '📋 LISTA AMPLIA': 'amplia' };
+      const sheetMap = {
+        '🔴 CALIFICADA URGENTE': 'urgente',
+        '🟡 NEGOCIOS EMERGENTES': 'emergente',
+        '📋 LISTA AMPLIA': 'amplia'
+      };
       let all = [];
-
-      sheets.forEach(sheetName => {
-        if (!wb.Sheets[sheetName]) return;
-        const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, defval: '' });
-        let headerIdx = -1;
-        rows.forEach((r, i) => { if (r.includes('Score')) headerIdx = i; });
-        if (headerIdx < 0) return;
-        const headers = rows[headerIdx].map(h => String(h).trim());
-        const col = h => headers.indexOf(h);
-        for (let i = headerIdx + 1; i < rows.length; i++) {
+      Object.entries(sheetMap).forEach(([sName, lista]) => {
+        if (!wb.Sheets[sName]) return;
+        const rows = XLSX.utils.sheet_to_json(wb.Sheets[sName], { header: 1, defval: '' });
+        let hi = -1;
+        rows.forEach((r, i) => { if (r.includes('Score')) hi = i; });
+        if (hi < 0) return;
+        const h = rows[hi].map(v => String(v).trim());
+        const c = k => h.indexOf(k);
+        for (let i = hi + 1; i < rows.length; i++) {
           const r = rows[i];
-          const score = parseFloat(r[col('Score')]);
-          const empresa = String(r[col('Empresa')] || '').trim();
+          const score = parseFloat(r[c('Score')]);
+          const empresa = String(r[c('Empresa')] || '').trim();
           if (!empresa || isNaN(score)) continue;
           all.push({
-            lista: listaMap[sheetName],
-            score,
-            empresa,
-            industria: r[col('Industria/Giro')] || '',
-            empleados: r[col('Empleados')] || '',
-            ingresos: r[col('Ingresos Est.')] || '',
-            ciudad: r[col('Ciudad')] || '',
-            estado: r[col('Estado')] || '',
-            web: r[col('Sitio Web')] || '',
-            contacto: r[col('Nombre Contacto')] || '',
-            cargo: r[col('Cargo')] || '',
-            nivel: r[col('Nivel')] || '',
-            email: r[col('Email Trabajo')] || '',
-            celular: r[col('Celular/Tel. Directo')] || '',
-            tel_empresa: r[col('Tel. Empresa')] || '',
-            linkedin: r[col('LinkedIn')] || '',
-            senales: r[col('Señales de Compra')] || '',
-            insights: r[col('Insights ISUZU')] || '',
-            estrategia: r[col('Estrategia Contacto')] || '',
-            descripcion: r[col('Descripción Empresa')] || '',
+            lista, score, empresa,
+            industria:   r[c('Industria/Giro')]     || '',
+            empleados:   r[c('Empleados')]           || '',
+            ingresos:    r[c('Ingresos Est.')]       || '',
+            ciudad:      r[c('Ciudad')]              || '',
+            estado:      r[c('Estado')]              || '',
+            web:         r[c('Sitio Web')]           || '',
+            contacto:    r[c('Nombre Contacto')]     || '',
+            cargo:       r[c('Cargo')]               || '',
+            nivel:       r[c('Nivel')]               || '',
+            email:       r[c('Email Trabajo')]       || '',
+            celular:     r[c('Celular/Tel. Directo')]|| '',
+            tel_empresa: r[c('Tel. Empresa')]        || '',
+            linkedin:    r[c('LinkedIn')]            || '',
+            senales:     r[c('Señales de Compra')]   || '',
+            insights:    r[c('Insights ISUZU')]      || '',
+            estrategia:  r[c('Estrategia Contacto')] || '',
+            descripcion: r[c('Descripción Empresa')] || '',
           });
         }
       });
-
       all.sort((a, b) => b.score - a.score);
       prospects = all.map((p, i) => ({ ...p, id: i }));
-
-      // Load saved progress
-      try { progress = JSON.parse(localStorage.getItem('isuzu_progress') || '{}'); } catch(e) { progress = {}; }
-
+      try { progress = JSON.parse(localStorage.getItem('isuzu_v2') || '{}'); } catch { progress = {}; }
       document.getElementById('upload-screen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
-      renderAll();
+      buildQueue();
       showToast(`✅ ${prospects.length} prospectos cargados`);
     } catch(err) {
-      alert('Error al leer el archivo. Asegúrate de subir el Excel correcto.');
+      alert('Error al leer el archivo.');
       console.error(err);
     }
   };
   reader.readAsBinaryString(file);
 }
 
-// ── RENDER ─────────────────────────────────────────────────────────────
-function getFiltered() {
-  return prospects.filter(p => {
-    if (currentFilter === 'todos') return true;
-    if (currentFilter === 'urgente') return p.lista === 'urgente';
-    if (currentFilter === 'emergente') return p.lista === 'emergente';
-    if (currentFilter === 'amplia') return p.lista === 'amplia';
-    const pr = progress[p.id];
-    const status = pr ? pr.resultado : 'pendiente';
-    if (currentFilter === 'pendiente') return !pr || !pr.resultado;
-    return status === currentFilter;
-  });
-}
-
-function renderAll() {
-  const filtered = getFiltered();
-  const total = prospects.length;
-  const done = Object.values(progress).filter(p => p.resultado).length;
-  document.getElementById('count-display').textContent = `${done} / ${total}`;
-  document.getElementById('progress-bar').style.width = total ? (done/total*100)+'%' : '0%';
-
-  const area = document.getElementById('card-area');
-  if (!filtered.length) {
-    area.innerHTML = '<div class="empty-state"><h3>Sin prospectos aquí</h3><p>Cambia el filtro para ver más.</p></div>';
-    return;
-  }
-  area.innerHTML = filtered.map(p => renderCard(p)).join('');
-}
-
-function renderCard(p) {
-  const pr = progress[p.id] || {};
-  const resultado = pr.resultado || '';
-  const nota = pr.nota || '';
-  const fecha = pr.fecha || '';
-
-  const listaBadge = p.lista === 'urgente' ? 'badge-urgente' : p.lista === 'emergente' ? 'badge-emergente' : 'badge-amplia';
-  const listaLabel = p.lista === 'urgente' ? '🔴 Urgente' : p.lista === 'emergente' ? '🟡 Emergente' : '📋 Amplia';
-
-  const liUrl = p.linkedin ? (p.linkedin.startsWith('http') ? p.linkedin : 'https://' + p.linkedin) : '';
-  const webUrl = p.web ? (p.web.startsWith('http') ? p.web : 'https://' + p.web) : '';
-
-  const resultLabels = {
-    contactado: '✅ Contactado',
-    'no-contesto': '📵 No contestó',
-    cita: '📅 Cita agendada',
-    'no-interesa': '❌ No interesa'
-  };
-
-  const prevResultHtml = resultado ? `
-    <div class="prev-result ${resultado}">${resultLabels[resultado] || resultado}</div>
-    ${nota ? `<div class="prev-nota">💬 ${escHtml(nota)}</div>` : ''}
-    ${fecha ? `<div class="prev-fecha">📅 Seguimiento: ${fecha}</div>` : ''}
-  ` : '';
-
-  const makeResultBtn = (key, label) =>
-    `<button class="result-btn ${resultado === key ? 'active-' + key : ''}" onclick="selectResult(${p.id}, '${key}')">${label}</button>`;
-
-  return `
-  <div class="card" id="card-${p.id}">
-    <div class="card-header">
-      <div class="card-header-left">
-        <div class="card-badges">
-          <span class="badge ${listaBadge}">${listaLabel}</span>
-          <span class="badge badge-score">Score ${p.score}</span>
-          ${p.nivel ? `<span class="badge badge-score">${p.nivel}</span>` : ''}
-        </div>
-        <div class="card-empresa">${escHtml(p.empresa)}</div>
-        ${p.contacto ? `<div class="card-contacto">${escHtml(p.contacto)}</div>` : ''}
-        ${p.cargo ? `<div class="card-cargo">${escHtml(p.cargo)}</div>` : ''}
-      </div>
-      <div class="status-dot ${resultado || 'pendiente'}"></div>
-    </div>
-
-    <div class="card-body">
-      <div class="info-row">
-        ${p.ciudad || p.estado ? `<span class="info-item">📍 ${[p.ciudad, p.estado].filter(Boolean).join(', ')}</span>` : ''}
-        ${p.empleados ? `<span class="info-item">👥 ${p.empleados}</span>` : ''}
-        ${p.ingresos ? `<span class="info-item">💰 ${p.ingresos}</span>` : ''}
-        ${p.email ? `<span class="info-item">✉️ <a href="mailto:${p.email}">${p.email}</a></span>` : ''}
-        ${p.celular ? `<span class="info-item">📞 <a href="tel:${p.celular}">${p.celular}</a></span>` : ''}
-        ${p.tel_empresa ? `<span class="info-item">☎️ ${p.tel_empresa}</span>` : ''}
-        ${webUrl ? `<span class="info-item">🌐 <a href="${webUrl}" target="_blank">${p.web}</a></span>` : ''}
-        ${liUrl ? `<span class="info-item">🔗 <a href="${liUrl}" target="_blank">LinkedIn</a></span>` : ''}
-      </div>
-      ${p.senales ? `<div class="section-label">Señales de compra</div><div class="senales-text">${escHtml(p.senales)}</div>` : ''}
-      ${p.insights ? `<div class="section-label">Propuesta ISUZU</div><div class="insights-text">${escHtml(p.insights)}</div>` : ''}
-      ${p.estrategia ? `<div class="section-label">Estrategia de contacto</div><div class="estrategia-text">${escHtml(p.estrategia)}</div>` : ''}
-      ${p.descripcion ? `<div class="section-label">Sobre la empresa</div><div class="senales-text">${escHtml(p.descripcion.substring(0, 200))}${p.descripcion.length > 200 ? '...' : ''}</div>` : ''}
-    </div>
-
-    <div class="card-actions">
-      ${prevResultHtml}
-      <div class="action-label">Registrar resultado:</div>
-      <div class="result-btns">
-        ${makeResultBtn('contactado', '✅ Contactado')}
-        ${makeResultBtn('no-contesto', '📵 No contestó')}
-        ${makeResultBtn('cita', '📅 Cita agendada')}
-        ${makeResultBtn('no-interesa', '❌ No interesa')}
-      </div>
-      <textarea class="nota-input" id="nota-${p.id}" rows="2" placeholder="Nota rápida: qué pasó, qué dijo, próximo paso...">${escHtml(nota)}</textarea>
-      <div class="fecha-row">
-        <span class="fecha-label">📅 Fecha de seguimiento:</span>
-        <input type="date" class="fecha-input" id="fecha-${p.id}" value="${fecha}">
-      </div>
-      <button class="save-btn" id="save-btn-${p.id}" onclick="saveProgress(${p.id})">Guardar y continuar →</button>
-    </div>
-  </div>`;
-}
-
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br>');
-}
-
-// ── INTERACTIONS ───────────────────────────────────────────────────────
-function selectResult(id, resultado) {
-  if (!progress[id]) progress[id] = {};
-  progress[id].resultado = resultado;
-  saveLocal();
-  // Update buttons in DOM
-  const card = document.getElementById('card-' + id);
-  if (!card) return;
-  card.querySelectorAll('.result-btn').forEach(btn => {
-    btn.className = 'result-btn';
-  });
-  const resultKeys = ['contactado','no-contesto','cita','no-interesa'];
-  card.querySelectorAll('.result-btn').forEach((btn, i) => {
-    if (resultKeys[i] === resultado) btn.classList.add('active-' + resultado);
-  });
-  // Update status dot
-  const dot = card.querySelector('.status-dot');
-  if (dot) { dot.className = 'status-dot ' + resultado; }
-  updateTopbar();
-}
-
-function saveProgress(id) {
-  const nota = document.getElementById('nota-' + id)?.value || '';
-  const fecha = document.getElementById('fecha-' + id)?.value || '';
-  const resultado = progress[id]?.resultado || '';
-  if (!progress[id]) progress[id] = {};
-  progress[id] = { resultado, nota, fecha };
-  saveLocal();
-  updateTopbar();
-  const btn = document.getElementById('save-btn-' + id);
-  if (btn) {
-    btn.textContent = '✓ Guardado';
-    btn.classList.add('saved');
-    setTimeout(() => {
-      btn.textContent = 'Guardar y continuar →';
-      btn.classList.remove('saved');
-      if (currentFilter !== 'todos') renderAll();
-    }, 1200);
-  }
-  showToast('Guardado ✓');
-}
-
-function saveLocal() {
-  try { localStorage.setItem('isuzu_progress', JSON.stringify(progress)); } catch(e) {}
-}
-
-function updateTopbar() {
-  const total = prospects.length;
-  const done = Object.values(progress).filter(p => p.resultado).length;
-  document.getElementById('count-display').textContent = `${done} / ${total}`;
-  document.getElementById('progress-bar').style.width = total ? (done/total*100)+'%' : '0%';
+// ── QUEUE ─────────────────────────────────────────────────────────────
+function buildQueue() {
+  queue = prospects
+    .filter(p => {
+      if (curFilter === 'todos') return true;
+      if (['urgente','emergente','amplia'].includes(curFilter)) return p.lista === curFilter;
+      const r = (progress[p.id] || {}).resultado || '';
+      if (curFilter === 'pendiente') return !r;
+      return r === curFilter;
+    })
+    .map(p => p.id);
+  qIdx = 0;
+  renderStage();
 }
 
 function setFilter(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  curFilter = f;
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  renderAll();
+  buildQueue();
 }
 
-function showFilter(f) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    b.classList.toggle('active', b.textContent.toLowerCase().includes(f) || (f === 'todos' && b.textContent === 'Todos'));
+// ── RENDER ────────────────────────────────────────────────────────────
+function renderStage() {
+  updateTopbar();
+  const stage = document.getElementById('stage');
+
+  if (!queue.length) {
+    stage.innerHTML = `
+      <div class="done-screen">
+        <div class="done-icon">🎉</div>
+        <h2>Sin prospectos aquí</h2>
+        <p>Cambia el filtro para ver más contactos.</p>
+        <button class="done-btn sec" onclick="setFilter('todos', document.querySelector('.fbtn'))">Ver todos</button>
+      </div>`;
+    return;
+  }
+
+  if (qIdx >= queue.length) {
+    const done  = queue.filter(id => (progress[id]||{}).resultado).length;
+    stage.innerHTML = `
+      <div class="done-screen">
+        <div class="done-icon">🏁</div>
+        <h2>¡Lista completada!</h2>
+        <p>Trabajaste ${done} de ${queue.length} prospectos en esta sesión.</p>
+        <button class="done-btn" onclick="exportExcel()">⬇ Exportar Excel</button>
+        <button class="done-btn sec" onclick="qIdx=0;renderStage()">Volver al inicio</button>
+      </div>`;
+    return;
+  }
+
+  const p  = prospects[queue[qIdx]];
+  const pr = progress[p.id] || {};
+  curResult = pr.resultado || '';
+
+  const listaClass = { urgente:'b-urgente', emergente:'b-emergente', amplia:'b-amplia' }[p.lista];
+  const listaLabel = { urgente:'🔴 Urgente', emergente:'🟡 Emergente', amplia:'📋 Amplia' }[p.lista];
+  const liUrl  = p.linkedin ? (p.linkedin.startsWith('http') ? p.linkedin : 'https://' + p.linkedin) : '';
+  const webUrl = p.web      ? (p.web.startsWith('http')      ? p.web      : 'https://' + p.web)      : '';
+  const waNum  = p.celular  ? p.celular.replace(/[^0-9]/g,'') : '';
+
+  const rl = { contactado:'✅ Contactado', 'no-contesto':'📵 No contestó', cita:'📅 Cita agendada', 'no-interesa':'❌ No interesa' };
+  const prevHtml = curResult ? `
+    <div class="prev-result-wrap">
+      <span class="prev-badge pr-${curResult}">${rl[curResult]}</span>
+      ${pr.nota  ? `<div class="prev-nota">💬 ${esc(pr.nota)}</div>` : ''}
+      ${pr.fecha ? `<div class="prev-fecha">📅 Seguimiento: ${pr.fecha}</div>` : ''}
+    </div>` : '';
+
+  const rb = (key, label) =>
+    `<button class="rbtn${curResult===key?' sel-'+key:''}" onclick="pickResult('${key}')">${label}</button>`;
+
+  const done  = Object.values(progress).filter(x => x.resultado).length;
+  const total = prospects.length;
+
+  stage.innerHTML = `
+    <div class="counter-chip">
+      <span class="chip-dot" style="background:${curFilter==='urgente'?'#ef4444':curFilter==='emergente'?'#f59e0b':curFilter==='amplia'?'#6366f1':'#9ca3af'}"></span>
+      Prospecto ${qIdx + 1} de ${queue.length}
+      &nbsp;·&nbsp; ${done} completados de ${total}
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-badges">
+          <span class="badge ${listaClass}">${listaLabel}</span>
+          <span class="badge b-score">Score ${p.score}</span>
+          ${p.nivel ? `<span class="badge b-nivel">${p.nivel}</span>` : ''}
+        </div>
+        <div class="card-empresa">${esc(p.empresa)}</div>
+        ${p.contacto ? `<div class="card-contacto">${esc(p.contacto)}</div>` : ''}
+        ${p.cargo    ? `<div class="card-cargo">${esc(p.cargo)}</div>`       : ''}
+      </div>
+
+      ${p.ciudad||p.estado||p.empleados||p.ingresos||p.industria ? `
+      <div class="card-meta">
+        ${p.ciudad||p.estado ? `<span class="meta-item">📍 ${[p.ciudad,p.estado].filter(Boolean).join(', ')}</span>` : ''}
+        ${p.empleados        ? `<span class="meta-item">👥 ${p.empleados}</span>`  : ''}
+        ${p.ingresos         ? `<span class="meta-item">💰 ${p.ingresos}</span>`   : ''}
+        ${p.industria        ? `<span class="meta-item">🏭 ${p.industria}</span>`  : ''}
+      </div>` : ''}
+
+      <div class="contact-section">
+        <div class="contact-label">Contactar ahora</div>
+        <div class="contact-btns">
+          ${waNum  ? `<a class="cbtn whatsapp"    href="https://wa.me/${waNum}" target="_blank">💬 WhatsApp</a>` : ''}
+          ${p.celular      ? `<a class="cbtn llamar"      href="tel:${p.celular}" >📞 ${p.celular}</a>` : ''}
+          ${p.tel_empresa  ? `<a class="cbtn tel-empresa" href="tel:${p.tel_empresa}">☎️ ${p.tel_empresa}</a>` : ''}
+          ${p.email        ? `<a class="cbtn email"       href="mailto:${p.email}" target="_blank">✉️ Email</a>` : ''}
+          ${liUrl          ? `<a class="cbtn linkedin"    href="${liUrl}"  target="_blank">in LinkedIn</a>` : ''}
+          ${webUrl         ? `<a class="cbtn web"         href="${webUrl}" target="_blank">🌐 Web</a>` : ''}
+          ${!waNum&&!p.celular&&!p.tel_empresa&&!p.email&&!liUrl
+            ? `<span class="no-contact">Sin contacto directo — usa LinkedIn o Web</span>` : ''}
+        </div>
+      </div>
+
+      <div class="insights-section">
+        ${p.senales   ? `<div class="sec-label">Señales de compra</div><div class="senales-text">${esc(p.senales)}</div>`     : ''}
+        ${p.insights  ? `<div class="sec-label">Propuesta ISUZU</div><div class="insights-box">${esc(p.insights)}</div>`      : ''}
+        ${p.estrategia? `<div class="sec-label">Estrategia</div><div class="estrategia-box">${esc(p.estrategia)}</div>`       : ''}
+        ${p.descripcion?`<div class="sec-label">Empresa</div><div class="senales-text">${esc(p.descripcion.slice(0,180))}${p.descripcion.length>180?'…':''}</div>` : ''}
+      </div>
+
+      <div class="action-section">
+        ${prevHtml}
+        <div class="action-label">¿Qué pasó?</div>
+        <div class="result-btns">
+          ${rb('contactado','✅ Contactado')}
+          ${rb('no-contesto','📵 No contestó')}
+          ${rb('cita','📅 Cita agendada')}
+          ${rb('no-interesa','❌ No interesa')}
+        </div>
+        <textarea class="nota-input" id="nota-field" rows="2"
+          placeholder="Nota: qué dijo, próximo paso, detalle...">${esc(pr.nota||'')}</textarea>
+        <div class="fecha-row">
+          <span class="fecha-lbl">📅 Seguimiento:</span>
+          <input type="date" class="fecha-input" id="fecha-field" value="${pr.fecha||''}">
+        </div>
+        <button class="next-btn" id="next-btn" onclick="saveAndNext()">
+          ${qIdx < queue.length - 1 ? 'Guardar y siguiente →' : 'Guardar y finalizar ✓'}
+        </button>
+      </div>
+    </div>`;
+}
+
+// ── INTERACTIONS ──────────────────────────────────────────────────────
+function pickResult(key) {
+  curResult = key;
+  document.querySelectorAll('.rbtn').forEach(b => {
+    b.className = 'rbtn' + (b.textContent.toLowerCase().includes(key.replace('-',' ')) ? ' sel-'+key : '');
   });
-  renderAll();
+  // re-apply all
+  const map = { contactado:'✅ Contactado', 'no-contesto':'📵 No contestó', cita:'📅 Cita agendada', 'no-interesa':'❌ No interesa' };
+  document.querySelectorAll('.rbtn').forEach(b => {
+    const k = Object.keys(map).find(k => b.textContent.trim() === map[k]);
+    b.className = 'rbtn' + (k === key ? ' sel-'+key : '');
+  });
+}
+
+function saveAndNext() {
+  const p    = prospects[queue[qIdx]];
+  const nota = document.getElementById('nota-field')?.value  || '';
+  const fecha= document.getElementById('fecha-field')?.value || '';
+  progress[p.id] = { resultado: curResult, nota, fecha };
+  saveLocal();
+  showToast(curResult ? '✓ Guardado' : '→ Siguiente');
+  qIdx++;
+  curResult = '';
+  renderStage();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function saveLocal() {
+  try { localStorage.setItem('isuzu_v2', JSON.stringify(progress)); } catch {}
+}
+
+function updateTopbar() {
+  const done  = Object.values(progress).filter(x => x.resultado).length;
+  const total = prospects.length;
+  const pct   = total ? Math.round(done/total*100) : 0;
+  document.getElementById('topbar-info').textContent = `${done}/${total} completados (${pct}%)`;
+  document.getElementById('prog-bar').style.width = pct + '%';
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  setTimeout(() => t.classList.remove('show'), 1800);
 }
 
-// ── EXPORT EXCEL ───────────────────────────────────────────────────────
+// ── EXPORT ────────────────────────────────────────────────────────────
 function exportExcel() {
-  const wb = XLSX.utils.book_new();
-  const resultLabels = { contactado: 'Contactado', 'no-contesto': 'No contestó', cita: 'Cita agendada', 'no-interesa': 'No interesa', '': 'Pendiente' };
-
+  const rl = { contactado:'Contactado', 'no-contesto':'No contestó', cita:'Cita agendada', 'no-interesa':'No interesa', '':'Pendiente' };
   const rows = prospects.map(p => {
     const pr = progress[p.id] || {};
     return {
       'Score': p.score,
-      'Lista': p.lista === 'urgente' ? 'Urgente' : p.lista === 'emergente' ? 'Emergente' : 'Amplia',
-      'Empresa': p.empresa,
-      'Contacto': p.contacto,
-      'Cargo': p.cargo,
-      'Nivel': p.nivel,
-      'Ciudad': p.ciudad,
-      'Estado': p.estado,
-      'Email': p.email,
-      'Celular': p.celular,
-      'Tel. Empresa': p.tel_empresa,
-      'LinkedIn': p.linkedin,
-      'Sitio Web': p.web,
-      'Empleados': p.empleados,
-      'Ingresos Est.': p.ingresos,
-      'Señales de Compra': p.senales,
-      'Insights ISUZU': p.insights,
+      'Lista': { urgente:'Urgente', emergente:'Emergente', amplia:'Amplia' }[p.lista],
+      'Empresa': p.empresa, 'Contacto': p.contacto, 'Cargo': p.cargo,
+      'Nivel': p.nivel, 'Ciudad': p.ciudad, 'Estado': p.estado,
+      'Email': p.email, 'Celular': p.celular, 'Tel. Empresa': p.tel_empresa,
+      'LinkedIn': p.linkedin, 'Sitio Web': p.web,
+      'Empleados': p.empleados, 'Ingresos Est.': p.ingresos,
+      'Industria': p.industria,
+      'Señales de Compra': p.senales, 'Insights ISUZU': p.insights,
       'Estrategia': p.estrategia,
-      '--- PROGRESO ---': '',
-      'Resultado': resultLabels[pr.resultado || ''],
+      '— PROGRESO —': '',
+      'Resultado': rl[pr.resultado||''],
       'Nota': pr.nota || '',
       'Fecha Seguimiento': pr.fecha || '',
     };
   });
-
   const ws = XLSX.utils.json_to_sheet(rows);
-  ws['!cols'] = Object.keys(rows[0]).map(k => ({ wch: Math.min(40, Math.max(10, k.length + 4)) }));
+  ws['!cols'] = Object.keys(rows[0]).map(k => ({ wch: Math.min(45, Math.max(10, k.length + 4)) }));
+  const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Prospectos ISUZU');
-  XLSX.writeFile(wb, `ISUZU_Prospectos_${new Date().toISOString().slice(0,10)}.xlsx`);
+  XLSX.writeFile(wb, `ISUZU_${new Date().toISOString().slice(0,10)}.xlsx`);
   showToast('Excel exportado ✓');
 }
 </script>
